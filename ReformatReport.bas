@@ -1,5 +1,6 @@
-Attribute VB_Name = "ReformatReport"
+Attribute VB_Name = "SalesForecast"
 Option Explicit
+
 
 'Figure out last row
 'from row 21 to last row:
@@ -90,6 +91,17 @@ For Each cell In ws.Range(FirstCell, LastCell)
           
         'Copy Data to new sheet
         For Each entry In DataRow
+        
+            'Check for missing product codes
+            If entry.Value = "" And entry.Column = 13 Then
+                entry.Value = "MISSING PRODCODE"
+            End If
+            
+            'Check for missing dates
+            If entry.Value = "" And entry.Column = 28 Then
+                entry.Value = "MISSING DATE"
+            End If
+            
             If entry.Value <> "" Then
                 Worksheets(DataSht).Cells(i, 50).End(xlToLeft).Offset(0, 1) = entry.Value
             End If
@@ -103,6 +115,3 @@ Next cell
 wb.Worksheets(DataSht).UsedRange.Columns.AutoFit
 wb.Worksheets(DataSht).Range("A1:CA1").Font.Bold = True
 End Sub
-
-
-
