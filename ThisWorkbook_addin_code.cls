@@ -35,7 +35,7 @@ On Error Resume Next 'Just in case
             
             .Style = msoButtonCaption
 
-            .OnAction = SalesForecast.Reformat
+            .OnAction = "Reformat"
 
             'Macro stored in a Standard Module
 
