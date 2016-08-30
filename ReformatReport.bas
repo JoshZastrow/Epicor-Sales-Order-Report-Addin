@@ -32,6 +32,8 @@ Dim j As Integer
 Dim DataRow As Range
 Dim sht As Worksheet
 Dim DataSht As String
+Dim SOdetail() As String
+Dim PartNum As String
 
 'Set the New Sheet Name
 DataSht = "Tabulated Data"
@@ -53,8 +55,7 @@ CustID = "Skip1"
 'Check to see if sheets area already made
 For Each sht In wb.Worksheets
     If sht.Name = DataSht Then
-        MsgBox ("Data Sheet has already been created. Delete or rename sheet to continue")
-        Exit Sub
+        sht.Delete
     End If
 Next sht
         
@@ -88,7 +89,11 @@ For Each cell In ws.Range(FirstCell, LastCell)
         wb.Worksheets(DataSht).Range("A10000").End(xlUp).Offset(1, 0) = CustID
         
         Set DataRow = ws.Range("A" & cell.Row, "CA" & cell.Row)
-          
+                
+        'Get Sales order, line and release and Part Number
+        SOdetail() = Split(DataRow(1).Value, "/")
+        PartNum = DataRow(7).Value
+        
         'Copy Data to new sheet
         For Each entry In DataRow
         
